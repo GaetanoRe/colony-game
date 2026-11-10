@@ -1,19 +1,5 @@
-use super::{tile::*, res_dir};
+use super::{tile::*, sheets::*};
 use std::{collections::HashMap, path::PathBuf};
-
-#[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
-pub enum Sheet{
-    Terrain,
-    Trees
-}
-
-pub struct SheetCoords{
-    col:i32,
-    row:i32,
-    width:i32,
-    height:i32,
-    sheet: Sheet
-}
 
 pub struct ObjectDef{
     pub name : & 'static str,
@@ -29,14 +15,17 @@ pub struct TerrainDef{
 }
 
 pub struct Registry{
-    terrain: HashMap<Terrain, TerrainDef>,
-    objects: HashMap<Object, ObjectDef>
+    pub terrain: HashMap<Terrain, TerrainDef>,
+    pub objects: HashMap<Object, ObjectDef>,
+    pub sheets: SheetTable
 }
 
 impl Registry{
     pub fn new() -> Self{
-        let terrain_path: PathBuf = res_dir().join("terrain");
-        let object_path :PathBuf = res_dir().join("objects");
+        // Place every default sheet in the sheet table
+        let sheet_table = SheetTable::with_defaults();
+
+        // Setup the registry
         let terrain = HashMap::from([
             (Terrain::Grass, TerrainDef{
                 name: "Grass", 
@@ -46,18 +35,18 @@ impl Registry{
                     row: 4, 
                     width: 1, 
                     height: 1,
-                    sheet: Sheet::Terrain
+                    kind: SheetType::Terrain
                 }
             }),
             (Terrain::Dirt, TerrainDef{
                 name: "Dirt",
-                walkable: false,
+                walkable: true,
                 sprite: SheetCoords { 
                     col: 2, 
                     row: 2, 
                     width: 1, 
                     height: 1,
-                    sheet: Sheet::Terrain
+                    kind: SheetType::Terrain
                 }
             }),
             (Terrain::Water, TerrainDef{
@@ -68,7 +57,7 @@ impl Registry{
                     row: 0, 
                     width: 1, 
                     height: 1,
-                    sheet: Sheet::Terrain
+                    kind: SheetType::Terrain
                 }
 
             })
@@ -84,12 +73,13 @@ impl Registry{
                     row: 12, 
                     width:2, 
                     height: 3,
-                    sheet: Sheet::Trees
+                    kind: SheetType::Trees
                 })
             })
         ]);
-
-        Registry{terrain, objects}
+       
+        
+        Registry{terrain, objects, sheets: sheet_table}
     }
 
     pub fn object(&self, o: Object) -> &ObjectDef{
