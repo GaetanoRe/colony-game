@@ -16,7 +16,7 @@ pub struct Rect{
 }
 
 impl Rect{
-    pub fn new(&self, col:i32, row:i32, width:i32, height:i32, kind: RectType) -> Self{
+    pub fn new(col:i32, row:i32, width:i32, height:i32, kind: RectType) -> Self{
         Rect { col, row, width, height, kind }
     }
 

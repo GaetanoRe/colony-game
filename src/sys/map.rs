@@ -39,7 +39,7 @@ impl Map{
                 let value = noise.get([x as f64 / scale, y as f64 / scale]);
                 let terr = if value < -0.2{
                     Terrain::Water
-                } else if value < -1.0{
+                } else if value < -0.1{
                     Terrain::Dirt
                 } else{
                     Terrain::Grass

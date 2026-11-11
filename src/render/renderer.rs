@@ -10,7 +10,7 @@ pub struct Renderer{
 }
 
 impl Renderer{
-    fn new(&self, rl: &mut RaylibHandle, thread: &RaylibThread, regist: &Registry) -> Self{
+    pub fn new(rl: &mut RaylibHandle, thread: &RaylibThread, regist: &Registry) -> Self{
         let mut textures : HashMap<SheetType, Texture2D> = HashMap::new();
         for (kind, def) in regist.sheets.iter(){
             let path = def.path.to_str().unwrap();

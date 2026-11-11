@@ -4,7 +4,6 @@ pub mod tile; // Defines WHO and/or WHAT
 pub mod map; // Defines WHERE
 pub mod sheets;
 pub mod regist; // Defines WHY and/or HOW
-pub mod input;
 
 pub fn res_dir() -> PathBuf {
     if cfg!(debug_assertions) {

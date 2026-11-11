@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use raylib::{error::GenMeshError::Allocation, prelude::*};
+use raylib::{prelude::*};
 
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub enum Action{
@@ -55,8 +55,8 @@ impl Input{
 
     pub fn input_on_axis(&self, rl: &RaylibHandle, negative: Action, positive:Action) -> f32{
         let mut value = 0.0;
-        if(self.is_down(rl, negative)){value -= 1.0;}
-        else if(self.is_down(rl, positive)){value += 1.0;}
+        if self.is_down(rl, negative) {value -= 1.0;}
+        if self.is_down(rl, positive) {value += 1.0;}
         value
     }
 
